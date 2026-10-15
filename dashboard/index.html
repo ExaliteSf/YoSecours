@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Tableau de bord de suivi d'activité Yo'Secours (maquette, données fictives).">
+  <title>Tableau de bord · Yo'Secours (maquette)</title>
+  <link rel="icon" href="img/favicon.png" type="image/png">
+
+  <!-- Mêmes polices que le site yosecours.fr : Syne (titres) + Plus Jakarta Sans (corps) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<!--
+  ============================================================
+  SÉCURITÉ : À LIRE AVANT TOUTE MISE EN LIGNE
+  ------------------------------------------------------------
+  Cette page est une MAQUETTE alimentée par des données fictives.
+
+  La version réelle contiendra des données financières (chiffre
+  d'affaires, factures, cotisations) et des données personnelles
+  (noms de stagiaires, clients). Elle devra impérativement être
+  protégée par une connexion sécurisée : authentification côté
+  serveur, HTTPS, session expirante, et données servies par une
+  API qui vérifie l'identité à chaque requête.
+
+  Masquer la page, la protéger par un simple mot de passe en
+  JavaScript, ou compter sur la balise noindex ne protège RIEN :
+  tout ce qui est envoyé au navigateur reste lisible.
+  ============================================================
+-->
+
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+  <div class="bandeau-maquette" role="note">
+    <strong>Maquette : données fictives.</strong>
+    <span>Aucune entreprise, aucun stagiaire et aucun montant affichés ne sont réels.</span>
+  </div>
+
+  <div class="app">
+    <!-- ============ Menu latéral ============ -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__head">
+        <a href="#vue-ensemble" class="sidebar__logo" aria-label="Yo'Secours, tableau de bord : vue d'ensemble">
+          <img src="img/logo.png" alt="" width="40" height="40">
+          <span class="logo-text">Yo'<span>Secours</span></span>
+        </a>
+        <button type="button" class="sidebar__close" data-action="fermer-menu" aria-label="Fermer le menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <p class="sidebar__label">Tableau de bord</p>
+
+      <nav aria-label="Sections du tableau de bord">
+        <ul class="menu">
+          <li>
+            <a class="menu__link" href="#vue-ensemble" data-vue="vue-ensemble">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+              <span>Vue d'ensemble</span>
+            </a>
+          </li>
+          <li>
+            <a class="menu__link" href="#sessions" data-vue="sessions">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+              <span>Sessions</span>
+            </a>
+          </li>
+          <li>
+            <a class="menu__link" href="#clients" data-vue="clients">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/></svg>
+              <span>Clients</span>
+            </a>
+          </li>
+          <li>
+            <a class="menu__link" href="#facturation" data-vue="facturation">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg>
+              <span>Facturation</span>
+              <span class="menu__badge" data-compteur="retards" hidden></span>
+            </a>
+          </li>
+          <li>
+            <a class="menu__link" href="#finances" data-vue="finances">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+              <span>Finances</span>
+            </a>
+          </li>
+          <li>
+            <a class="menu__link" href="#certifications" data-vue="certifications">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M9 14l-2 7 5-3 5 3-2-7"/></svg>
+              <span>Certifications</span>
+              <span class="menu__badge" data-compteur="certifications" hidden></span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar__foot">
+        <p>Yoann AUPÉE · Entreprise individuelle<br>Formateur SST habilité INRS · Séez (73)</p>
+        <a href="https://yosecours.fr/" class="sidebar__site">Retour au site</a>
+      </div>
+    </aside>
+    <div class="sidebar__voile" data-action="fermer-menu" hidden></div>
+
+    <!-- ============ Zone principale ============ -->
+    <div class="main">
+      <header class="topbar">
+        <button type="button" class="burger" data-action="ouvrir-menu" aria-controls="sidebar" aria-expanded="false" aria-label="Ouvrir le menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+
+        <div class="topbar__titre">
+          <p class="section__label">Tableau de bord</p>
+          <p class="topbar__date" data-date-jour></p>
+        </div>
+
+        <div class="periode" role="group" aria-label="Période analysée">
+          <div class="segment" role="radiogroup" aria-label="Type de période">
+            <label class="segment__option"><input type="radio" name="periode" value="mois" checked><span>Mois</span></label>
+            <label class="segment__option"><input type="radio" name="periode" value="trimestre"><span>Trimestre</span></label>
+            <label class="segment__option"><input type="radio" name="periode" value="annee"><span>Année</span></label>
+          </div>
+          <div class="periode__nav">
+            <button type="button" class="icon-btn" data-action="periode-precedente" aria-label="Période précédente">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+            </button>
+            <p class="periode__libelle" data-periode-libelle aria-live="polite"></p>
+            <button type="button" class="icon-btn" data-action="periode-suivante" aria-label="Période suivante">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main id="contenu" class="contenu" tabindex="-1">
+
+        <!-- ============ 1. Vue d'ensemble ============ -->
+        <section class="vue" id="vue-ensemble" aria-labelledby="titre-vue-ensemble">
+          <header class="vue__head">
+            <h1 class="vue__titre" id="titre-vue-ensemble" tabindex="-1">Vue d'ensemble</h1>
+            <p class="vue__sous-titre" data-sous-titre="vue-ensemble"></p>
+          </header>
+
+          <div class="grille grille--kpi" data-zone="kpi-ca"></div>
+          <div class="grille grille--2" data-zone="jauges"></div>
+          <div class="grille grille--kpi" data-zone="kpi-activite"></div>
+
+          <article class="carte">
+            <header class="carte__head">
+              <h2 class="carte__titre">Chiffre d'affaires encaissé, 12 mois</h2>
+              <p class="carte__note">Montants HT, par mois d'encaissement. Ligne pointillée : objectif mensuel.</p>
+            </header>
+            <div class="graphique graphique--large" data-graphique="ca-mensuel"></div>
+          </article>
+
+          <div class="grille grille--2">
+            <article class="carte">
+              <header class="carte__head">
+                <h2 class="carte__titre">Prochaines sessions</h2>
+                <a class="lien" href="#sessions">Tout le planning</a>
+              </header>
+              <div data-zone="prochaines-sessions"></div>
+            </article>
+            <article class="carte">
+              <header class="carte__head">
+                <h2 class="carte__titre">À traiter</h2>
+              </header>
+              <div data-zone="a-traiter"></div>
+            </article>
+          </div>
+        </section>
+
+        <!-- ============ 2. Sessions ============ -->
+        <section class="vue" id="sessions" aria-labelledby="titre-sessions" hidden>
+          <header class="vue__head">
+            <h1 class="vue__titre" id="titre-sessions" tabindex="-1">Sessions</h1>
+            <p class="vue__sous-titre" data-sous-titre="sessions"></p>
+          </header>
+
+          <div class="grille grille--kpi" data-zone="kpi-sessions"></div>
+
+          <div class="grille grille--calendrier">
+            <article class="carte">
+              <header class="carte__head">
+                <h2 class="carte__titre" id="titre-calendrier">Calendrier</h2>
+              </header>
+              <div data-zone="calendrier"></div>
+            </article>
+            <article class="carte">
+              <header class="carte__head">
+                <h2 class="carte__titre" data-titre-jour>Sessions du jour sélectionné</h2>
+              </header>
+              <div data-zone="sessions-jour" aria-live="polite"></div>
+            </article>
+          </div>
+
+          <article class="carte">
+            <header class="carte__head">
+              <h2 class="carte__titre">Liste des sessions</h2>
+            </header>
+            <div data-tableau="sessions"></div>
+          </article>
+        </section>
+
+        <!-- ============ 3. Clients ============ -->
+        <section class="vue" id="clients" aria-labelledby="titre-clients" hidden>
+          <header class="vue__head">
+            <h1 class="vue__titre" id="titre-clients" tabindex="-1">Clients</h1>
+            <p class="vue__sous-titre" data-sous-titre="clients"></p>
+          </header>
+          <div class="grille grille--kpi" data-zone="kpi-clients"></div>
+          <article class="carte">
+            <header class="carte__head">
+              <h2 class="carte__titre">Portefeuille clients</h2>
+            </header>
+            <div data-tableau="clients"></div>
+          </article>
+        </section>
+
+        <!-- ============ 4. Facturation ============ -->
+        <section class="vue" id="facturation" aria-labelledby="titre-facturation" hidden>
+          <header class="vue__head">
+            <h1 class="vue__titre" id="titre-facturation" tabindex="-1">Facturation</h1>
+            <p class="vue__sous-titre" data-sous-titre="facturation"></p>
+          </header>
+          <div class="grille grille--kpi" data-zone="kpi-facturation"></div>
+
+          <article class="carte">
+            <div class="onglets" role="tablist" aria-label="Documents de facturation">
+              <button type="button" role="tab" class="onglet" id="onglet-factures" aria-controls="panneau-factures" aria-selected="true">Factures</button>
+              <button type="button" role="tab" class="onglet" id="onglet-devis" aria-controls="panneau-devis" aria-selected="false" tabindex="-1">Devis</button>
+            </div>
+            <div class="onglet__panneau" role="tabpanel" id="panneau-factures" aria-labelledby="onglet-factures" tabindex="0">
+              <div data-tableau="factures"></div>
+            </div>
+            <div class="onglet__panneau" role="tabpanel" id="panneau-devis" aria-labelledby="onglet-devis" tabindex="0" hidden>
+              <div data-tableau="devis"></div>
+            </div>
+          </article>
+          <p class="mention-tva" data-mention-tva></p>
+        </section>
+
+        <!-- ============ 5. Finances ============ -->
+        <section class="vue" id="finances" aria-labelledby="titre-finances" hidden>
+          <header class="vue__head">
+            <h1 class="vue__titre" id="titre-finances" tabindex="-1">Finances</h1>
+            <p class="vue__sous-titre" data-sous-titre="finances"></p>
+          </header>
+          <div class="grille grille--kpi" data-zone="kpi-finances"></div>
+
+          <div class="grille grille--2">
+            <article class="carte">
+              <header class="carte__head">
+                <h2 class="carte__titre">CA encaissé par formation</h2>
+                <p class="carte__note">Montants HT, hors indemnités kilométriques.</p>
+              </header>
+              <div class="graphique" data-graphique="ca-formation"></div>
+            </article>
+            <article class="carte">
+              <header class="carte__head">
+                <h2 class="carte__titre">Répartition intra / inter</h2>
+                <p class="carte__note">Part du CA encaissé de formation.</p>
+              </header>
+              <div class="graphique" data-graphique="intra-inter"></div>
+            </article>
+            <article class="carte">
+              <header class="carte__head">
+                <h2 class="carte__titre">CA encaissé par département</h2>
+                <p class="carte__note">Selon l'adresse du client.</p>
+              </header>
+              <div class="graphique" data-graphique="ca-departement"></div>
+            </article>
+            <article class="carte">
+              <header class="carte__head">
+                <h2 class="carte__titre">Charges par catégorie</h2>
+                <p class="carte__note">Dépenses réelles de la période.</p>
+              </header>
+              <div class="graphique" data-graphique="charges"></div>
+            </article>
+          </div>
+
+          <article class="carte">
+            <header class="carte__head">
+              <h2 class="carte__titre">Frais de déplacement</h2>
+            </header>
+            <div data-zone="deplacements"></div>
+          </article>
+
+          <article class="carte">
+            <header class="carte__head">
+              <h2 class="carte__titre">Détail des charges</h2>
+            </header>
+            <div data-tableau="charges"></div>
+          </article>
+        </section>
+
+        <!-- ============ 6. Certifications ============ -->
+        <section class="vue" id="certifications" aria-labelledby="titre-certifications" hidden>
+          <header class="vue__head">
+            <h1 class="vue__titre" id="titre-certifications" tabindex="-1">Certifications à renouveler</h1>
+            <p class="vue__sous-titre" data-sous-titre="certifications"></p>
+          </header>
+          <div class="grille grille--kpi" data-zone="kpi-certifications"></div>
+          <article class="carte">
+            <header class="carte__head">
+              <h2 class="carte__titre">Stagiaires à recycler</h2>
+              <p class="carte__note">Certificat SST valable 24 mois. Recyclage par une MAC SST de 7 h. Cette liste ne dépend pas du filtre de période.</p>
+            </header>
+            <div data-tableau="certifications"></div>
+          </article>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Notifications (relances, exports) -->
+  <div class="toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+
+  <!-- Chart.js via CDN (version figée). Sans lui, les données restent lisibles sous forme de tableaux. -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js" defer></script>
+  <script src="js/config.js" defer></script>
+  <script src="js/data.js" defer></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>
